@@ -1,0 +1,41 @@
+version: '3'
+services:
+  dbserver:
+    image: oracle/database:19.3.0-ee
+    volumes:
+      - ../data/database:/u01/app/oracle/oradata
+    ports:
+      - 1521:1521
+      - 8085:8080
+    env_file: .env
+    environment:
+      - TZ=`ls -la /etc/localtime | cut -d/ -f8-9`
+    shm_size: 1g
+    restart: unless-stopped
+
+  gradle:
+    build: ./gradle
+    user: gradle
+    volumes:
+      - ../src/sample-springboot:/app
+      - cache1:/home/gradle/.gradle
+    links:
+      - dbserver
+    environment:
+      - TZ=`ls -la /etc/localtime | cut -d/ -f8-9`
+    command: [echo, "no work"]
+
+  spring:
+    build: ./spring
+    ports:
+        - "8080:8080"
+    volumes:
+        - ../src/sample-springboot:/app
+    links:
+      - dbserver
+    environment:
+      - TZ=`ls -la /etc/localtime | cut -d/ -f8-9`
+    command: [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/build/libs/MyBootGApp-0.0.1-SNAPSHOT.jar"]
+
+volumes:
+  cache1: 
