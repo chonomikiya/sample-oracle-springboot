@@ -2,7 +2,9 @@
 ### 参考資料
 
 [DockerでOracle動かしたついでに、公式サンプルデータを突っ込んでから、ER図を自動生成してみようぜ](https://zenn.dev/angelica/articles/9e2411db5fc1b7)
+
 [DockerでOracle Databaseを使う](https://qiita.com/gorilla0513/items/f22e8cce4e08da031abe)
+
 [Oracle 11 g + Spring boot を Vagrant + Docker compose で試してみたメモ](https://qiita.com/hibohiboo/items/82f018a5824f4ed5e64f)
 
 前提としてoracle database19.3.0のイメージを準備している。
